@@ -1,8 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
 import numpy as npy
-import numpy.testing as npt                         
-import FastPhot as FP
+import numpy.testing as npt
+import fastphot as FP
 
 def test_gaussian_PSF():
 	# """
@@ -71,7 +71,7 @@ def test_no_noise():
 	# Save initial fluxes
 	flux_in = npy.ma.compressed(Masked_Catalog['flux'])
 	#
-	Final_Catalog, bkg, RESIDUAL_MAP = FP.Phot(SC_MAP, PSF_MAP, NOISE_MAP, Masked_Catalog, nb_process=4)
+	Final_Catalog, bkg, RESIDUAL_MAP = FP.fastphot(SC_MAP, PSF_MAP, NOISE_MAP, Masked_Catalog, nb_process=4)
 	#
 	# Test 
 	npt.assert_almost_equal(npy.ma.compressed(Final_Catalog['flux']), flux_in, decimal=-6)
