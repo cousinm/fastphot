@@ -1,29 +1,20 @@
-from __future__ import absolute_import, division, print_function
 from time import time                   # measure computation time
-from progress.bar import Bar            # progress bar
+from progress.bar import IncrementalBar, Bar  # progress bar
 from scipy import signal                # Convolution
 from os.path import join                # build path
-from .due import due, Doi               # Citation
 #
 import numpy as npy                     # array
 import multiprocessing as mp            # distribution onto multi process
 import math                             # for math operations
-import matplotlib.pyplot as plt         # plot
+import matplotlib.pyplot as plt         # plot#4D4D4D
 import matplotlib.gridspec as gridspec  # for multiplot grid
 import matplotlib.cm as cm              # colormap
 import matplotlib.colors as colors      # colors
 import matplotlib.colorbar as cb        # colorbar
 #
-__all__ = ["Phot", "save_pdf_MAP"]
+__all__ = ["build_catalog","gaussian_PSF","fastphot","model_MAP","save_pdf_MAP"]
 __test_path__ = 'tests'
 
-# Use duecredit (duecredit.org) to provide a citation to relevant work to
-# be cited. This does nothing, unless the user has duecredit installed,
-# And calls this with duecredit (as in `python -m duecredit script.py`):
-# due.cite(Doi("10.1167/13.9.30"),
-#         description="Template project for small scientific Python projects",
-#         tags=["reference-implementation"],
-#         path='shablona')
 #
 # -------------------------
 # SRC STRUCTURE
@@ -37,6 +28,44 @@ def src_dtype():
     ('flux', float),
     ('dflux', float)] 
     return src_dtype
+#
+# -------------------------
+# CATALOG BUILD
+# -------------------------   
+def build_catalog(xpos, ypos, flux):
+	"""
+    Return a catalog of sources according to the source type src_type 
+    
+    Parameters
+    ----------
+    xpos : npy array
+        The "x" positions of the sources
+    ypos : npy array
+        The "y" positions of the sources
+    flux : npy array
+		The flux of the sources    
+    
+    Returns
+    -------
+    Catalog : a npy array of sources
+        The catalog of sources
+    """
+	
+	N_srcs = len(xpos)
+	if ((len(ypos) != N_srcs) or (len(flux) != N_srcs)):
+		raise NameError('build_catalog: Unconsistent size xpos, ypos, flux')
+
+	for i in range(len(xpos)):
+		#
+		s = (i, xpos[i], 0.e0, ypos[i], 0.e0, flux[i], 0.e0)
+		#
+		# Update source dict
+		if (i == 0):
+			# create the structured list
+			Catalog = npy.array(s, dtype=src_dtype())
+		else:
+			Catalog = npy.append(Catalog, npy.array(s, dtype=src_dtype()))	
+	return Catalog  
 #
 # -------------------------
 # GAUSSIAN PSF
@@ -141,7 +170,8 @@ def fastphot(SC_MAP, PSF_MAP, NOISE_MAP, Catalog, nb_process=4):
     Y_pos = npy.ma.compressed(Catalog['y_pos'])
     R = [pool.apply_async(Coef_i, args=(SC_full_MAP, NOISE_full_MAP, PSF_MAP, X_pos, Y_pos, si)) for si in range(N_src)]
     # Reformat result, build A and B
-    bar = Bar(' >', max=N_src)
+    #bar = Bar(' >', max=N_src)
+    bar = IncrementalBar(' >', max=N_src)
     for ri in R:
         bar.next()
         r_i = ri.get()
@@ -300,7 +330,7 @@ def Coef_i(SC_MAP, NOISE_MAP, PSF_MAP, X_pos, Y_pos, i):
     X_pos : numpy array
         list of x (first dimension) source positions.
     Y_pos : numpy array
-        list of y (second dimesnion) source positions.
+        list of y (second dimension) source positions.
     i : integer
         index of the source: i in [0: len(X_pos)-1]
 
