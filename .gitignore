@@ -1,0 +1,8 @@
+
+.cache/
+
+fastphot/__pycache__/
+
+fastphot/tests/
+
+__pycache__/

@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function
-
 import numpy as npy
 import numpy.testing as npt
 import fastphot as FP
@@ -32,9 +30,9 @@ def test_no_noise():
 	PSF_MAP = FP.gaussian_PSF(npix=31, std=2.0)
 	#
 	# Create the SC_MAP with some sources
-	npix_x = 50
-	npix_y = 50
-	N_srcs = 11
+	npix_x = 150
+	npix_y = 150
+	N_srcs = 110
 	#
 	SC_MAP = npy.zeros([npix_x, npix_y])
 	MASK_MAP = (SC_MAP > 0.e0)
@@ -44,21 +42,10 @@ def test_no_noise():
 	maxflux = 1.e1
 	#
 	# Build the reference catalog
-	for i in range(N_srcs):
-		#
-		# create the new source
-		# ID, x_pos, dx_pos, y_pos, dy_pos, flux, dflux
-		xpos = npy.random.uniform(1, npix_x - 2)
-		ypos = npy.random.uniform(1, npix_y - 2)
-		flux = npy.random.uniform(minflux, maxflux)
-		s = (i, xpos, 0.e0, ypos, 0.e0, flux, 0.e0)
-		#
-		# Update source dict
-		if (i == 0):
-			# create the structured list
-			Catalog = npy.array(s, dtype=FP.src_dtype())
-		else:
-			Catalog = npy.append(Catalog, npy.array(s, dtype=FP.src_dtype()))	
+	xpos = npy.random.uniform(1, npix_x - 2, size=N_srcs)
+	ypos = npy.random.uniform(1, npix_y - 2, size=N_srcs)
+	flux = npy.random.uniform(minflux, maxflux, size=N_srcs)
+	Catalog = FP.build_catalog(xpos, ypos, flux)
 	#
 	SC_MAP = npy.ma.array(FP.model_MAP(SC_MAP, PSF_MAP, Catalog), mask=MASK_MAP)
 	# 
