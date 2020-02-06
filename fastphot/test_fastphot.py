@@ -14,7 +14,7 @@ def test_gaussian_PSF():
     npix = int(100. * std)
     # 
     # Create MAP_PSF
-    PSF_MAP = fastphot.gaussian_PSF(npix=npix, std=std)
+    PSF_MAP = FP.gaussian_PSF(npix=npix, std=std)
     #
     # Test
     npt.assert_almost_equal(npy.sum(PSF_MAP), 1.e0, decimal=6)
@@ -44,7 +44,7 @@ def test_no_noise():
 	# Build the reference catalog
 	xpos = npy.random.uniform(1, npix_x - 2, size=N_srcs)
 	ypos = npy.random.uniform(1, npix_y - 2, size=N_srcs)
-	flux = npy.random.uniform(minflux, maxflux, size=N_srcs-2)
+	flux = npy.random.uniform(minflux, maxflux, size=N_srcs)
 	Catalog = FP.build_catalog(xpos, ypos, flux)
 	#
 	SC_MAP = npy.ma.array(FP.model_MAP(SC_MAP, PSF_MAP, Catalog), mask=MASK_MAP)

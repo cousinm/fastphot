@@ -12,7 +12,7 @@ import matplotlib.cm as cm              # colormap
 import matplotlib.colors as colors      # colors
 import matplotlib.colorbar as cb        # colorbar
 #
-__all__ = ["build_catalog","gaussian_PSF","fastphot","model_MAP","save_pdf_MAP"]
+__all__ = ["src_dtype","build_catalog","gaussian_PSF","fastphot","model_MAP","save_pdf_MAP"]
 __test_path__ = 'tests'
 
 #
