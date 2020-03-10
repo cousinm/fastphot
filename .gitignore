@@ -6,3 +6,5 @@ fastphot/__pycache__/
 fastphot/tests/
 
 __pycache__/
+
+.vscode/

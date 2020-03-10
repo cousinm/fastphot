@@ -12,9 +12,9 @@ The project has the following structure:
       |- fastphot/
          |- __init__.py
          |- fastphot.py
+      |- tests
          |- test_fastphot.py
       |- setup.py
       |- requirements.txt
-      |- appveyor.yml
       |- LICENSE
       |- Makefile
