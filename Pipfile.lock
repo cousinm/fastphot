@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9e4251d703dd4809a47e444ae3f893c28d85e5dedc77b85dc719bd1d1ea55bf8"
+            "sha256": "9cf82437765c17b9cc99cef0561dfa5503a29ee3a6d11890efb14eacf8b2d9bd"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.7"
+            "python_version": "3.6"
         },
         "sources": [
             {
@@ -22,6 +22,10 @@
                 "sha256:cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"
             ],
             "version": "==0.10.0"
+        },
+        "fastphot": {
+            "editable": true,
+            "path": "."
         },
         "kiwisolver": {
             "hashes": [
