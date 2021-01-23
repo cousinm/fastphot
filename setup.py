@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'fastphot',
-    version = '0.1.0',
+    version = '1.1.0',
     install_requires = ['numpy', 'scipy', 'matplotlib', 'progress'],
     packages = find_packages()
 )
