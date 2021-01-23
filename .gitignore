@@ -6,3 +6,9 @@ fastphot/__pycache__/
 fastphot/tests/
 
 __pycache__/
+
+.vscode/
+
+fastphot.egg-info/
+
+*.pdf
