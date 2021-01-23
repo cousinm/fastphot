@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages
 
-
 setup(
     name = 'fastphot',
     version = '0.1.0',

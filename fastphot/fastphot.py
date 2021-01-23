@@ -485,7 +485,7 @@ def save_pdf_MAP(MAP, map_name, src_cat, path=__test_path__):
     plt.title(map_name + ' MAP')
     plt.imshow(MAP_, extent=[0., sx, 0., sy],
                origin='lower', interpolation='nearest',
-               aspect='auto', shape=MAP.shape, cmap=cmap)
+               aspect='auto', cmap=cmap)
     # In matplotlib.imshow()
     # the origin of the pixel is in the corner of the pixel
     # To obtain source positions in the center of their associated pixel

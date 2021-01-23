@@ -4,15 +4,19 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+numpy = "*"
+scipy = "*"
+tox = "*"
+matplotlib = "*"
+progress = "*"
 flake8 = "*"
 pytest = "*"
 
 [packages]
-numpy = "*"
-scipy = "*"
-matplotlib = "*"
-progress = "*"
-fastphot = {editable = true,path = "."}
+fastphot = {path = ".", Editable = true}
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+test = "tox"
