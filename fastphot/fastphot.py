@@ -186,6 +186,8 @@ def fastphot(SC_MAP, PSF_MAP, NOISE_MAP, Catalog, nb_process=4):
     RESIDUAL_MAP = SC_MAP - model_MAP(SC_MAP, PSF_MAP, Catalog)
     #
     return Catalog, F[N_src], RESIDUAL_MAP
+
+
 #
 # -----------------------------------
 # CREATE A SOURCE AT A GIVEN POSITION
@@ -282,8 +284,10 @@ def extract_source_at_pos(MAP, x_pos, y_pos, PSF_npix_x, PSF_npix_y):
     cpix_x = int(math.floor(PSF_npix_x / 2))
     cpix_y = int(math.floor(PSF_npix_y / 2))
     # corner pixels
-    x_inf = int(round(x_pos)) - cpix_x; x_sup = x_inf + PSF_npix_x
-    y_inf = int(round(y_pos)) - cpix_y; y_sup = y_inf + PSF_npix_y
+    x_inf = int(round(x_pos)) - cpix_x
+    x_sup = x_inf + PSF_npix_x
+    y_inf = int(round(y_pos)) - cpix_y
+    y_sup = y_inf + PSF_npix_y
     # extract map
     SRC_MAP = MAP[x_inf:x_sup, y_inf:y_sup]
     #
@@ -463,7 +467,7 @@ def save_pdf_MAP(MAP, map_name, src_cat, path=__test_path__):
     px = min(int(math.floor(sy / 10)), 10)
     py = int(1.1 * math.floor(px * float(sy) / float(sx)))
     #
-    fig = plt.figure(figsize=(px, py))
+    plt.figure(figsize=(px, py))
     gs = gridspec.GridSpec(1, 1)
     gs.update(left=0.1, right=0.84, bottom=0.1, top=0.92)
     #
